@@ -1,8 +1,7 @@
 package segura.taylor.bl.persistencia;
 
 import segura.taylor.bl.entidades.*;
-import segura.taylor.bl.enums.EnumTipoMaterial;
-import segura.taylor.bl.interfaces.SerializableCSV;
+import segura.taylor.bl.enums.EnumTipoUsuario;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -13,18 +12,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class MaterialFAO {
-    private final String directorioMateriales = "c:\\dev\\Materiales.csv";
+public class UsuarioFAO {
+    private final String directorioUsuarios = "c:\\dev\\Usuarios.txt";
 
-    public boolean guardarNuevoMaterial(Material nuevoMaterial) {
-        boolean idRepetido = buscarPorId(nuevoMaterial.getSignatura()).isPresent();
+    public boolean guardarNuevoUsuario(Usuario nuevoUsuario) {
+        boolean idRepetido = buscarPorId(nuevoUsuario.getId()).isPresent();
 
         if(!idRepetido) {
             ArrayList<String> lines = new ArrayList<>();
-            lines.add(nuevoMaterial.toCSV());
+            lines.add(nuevoUsuario.toCSV());
 
             try {
-                Files.write(Paths.get(directorioMateriales), lines, StandardCharsets.UTF_8, StandardOpenOption.CREATE,
+                Files.write(Paths.get(directorioUsuarios), lines, StandardCharsets.UTF_8, StandardOpenOption.CREATE,
                         StandardOpenOption.APPEND);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -34,18 +33,18 @@ public class MaterialFAO {
         return false;
     }
 
-    public List<Material> listarTodos() {
-        ArrayList<Material> result = new ArrayList<>();
+    public List<Usuario> listarTodos() {
+        ArrayList<Usuario> result = new ArrayList<>();
         BufferedReader reader;
 
-        File archivoMateriales = new File(directorioMateriales);
-        if(archivoMateriales.exists()) {
+        File archivoUsuarios = new File(directorioUsuarios);
+        if(archivoUsuarios.exists()) {
             try {
-                reader = new BufferedReader(new FileReader(directorioMateriales));
+                reader = new BufferedReader(new FileReader(directorioUsuarios));
                 String currentLine = reader.readLine();
                 while (currentLine != null) {
                     String[] datos = currentLine.split(",");
-                    result.add(leerMaterialCSV(datos));
+                    result.add(leerUsuarioCSV(datos));
 
                     currentLine = reader.readLine();
                 }
@@ -60,20 +59,20 @@ public class MaterialFAO {
         return result;
     }
 
-    public List<Material> listarPorTipo(EnumTipoMaterial tipo) {
-        ArrayList<Material> result = new ArrayList<>();
+    public List<Usuario> listarPorTipo(EnumTipoUsuario tipo) {
+        ArrayList<Usuario> result = new ArrayList<>();
         BufferedReader reader;
 
-        File archivoMateriales = new File(directorioMateriales);
-        if(archivoMateriales.exists()) {
+        File archivoUsuarios = new File(directorioUsuarios);
+        if(archivoUsuarios.exists()) {
             try {
-                reader = new BufferedReader(new FileReader(directorioMateriales));
+                reader = new BufferedReader(new FileReader(directorioUsuarios));
                 String currentLine = reader.readLine();
                 while (currentLine != null) {
                     String[] datos = currentLine.split(",");
                     //Filtrar por tipo.
-                    if (EnumTipoMaterial.valueOf(datos[0]).equals(tipo)) {
-                        result.add(leerMaterialCSV(datos));
+                    if (EnumTipoUsuario.valueOf(datos[0]).equals(tipo)) {
+                        result.add(leerUsuarioCSV(datos));
                     }
 
                     currentLine = reader.readLine();
@@ -88,19 +87,19 @@ public class MaterialFAO {
         return result;
     }
 
-    public Optional<Material> buscarPorId(String id) {
+    public Optional<Usuario> buscarPorId(String id) {
         BufferedReader reader;
 
-        File archivoMateriales = new File(directorioMateriales);
-        if(archivoMateriales.exists()) {
+        File archivoUsuarios = new File(directorioUsuarios);
+        if(archivoUsuarios.exists()) {
             try {
-                reader = new BufferedReader(new FileReader(directorioMateriales));
+                reader = new BufferedReader(new FileReader(directorioUsuarios));
                 String currentLine = reader.readLine();
                 while (currentLine != null) {
                     String[] datos = currentLine.split(",");
                     //Filtrar por signatura o id.
                     if (datos[1].equals(id)) {
-                        return Optional.of(leerMaterialCSV(datos));
+                        return Optional.of(leerUsuarioCSV(datos));
                     }
 
                     currentLine = reader.readLine();
@@ -114,20 +113,17 @@ public class MaterialFAO {
         return Optional.empty();
     }
 
-    private Material leerMaterialCSV(String[] datosLinea) {
-        EnumTipoMaterial tipoMaterial = EnumTipoMaterial.valueOf(datosLinea[0]);    //El primer atributo siempre define el tipo de material
+    private Usuario leerUsuarioCSV(String[] datosLinea) {
+        EnumTipoUsuario tipoUsuario = EnumTipoUsuario.valueOf(datosLinea[0]);    //El primer atributo siempre define el tipo de Usuario
 
-        if(EnumTipoMaterial.AUDIO.equals(tipoMaterial)) {
-            return new Audio(datosLinea);
+        if(EnumTipoUsuario.ESTUDIANTE.equals(tipoUsuario)) {
+            return new Estudiante(datosLinea);
         }
-        if(EnumTipoMaterial.OTRO.equals(tipoMaterial)) {
-            return new Otro(datosLinea);
+        if(EnumTipoUsuario.PROFESOR.equals(tipoUsuario)) {
+            return new Profesor(datosLinea);
         }
-        if(EnumTipoMaterial.TEXTO.equals(tipoMaterial)) {
-            return new Texto(datosLinea);
-        }
-        if(EnumTipoMaterial.VIDEO.equals(tipoMaterial)) {
-            return new Video(datosLinea);
+        if(EnumTipoUsuario.ADMINISTRATIVO.equals(tipoUsuario)) {
+            return new Administrativo(datosLinea);
         }
         return null;
     }

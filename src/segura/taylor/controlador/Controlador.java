@@ -1,19 +1,24 @@
 package segura.taylor.controlador;
 
 import segura.taylor.bl.entidades.*;
-import segura.taylor.bl.enums.EnumFormato;
-import segura.taylor.bl.enums.EnumTema;
+import segura.taylor.bl.enums.*;
 import segura.taylor.bl.gestor.GestorMateriales;
+import segura.taylor.bl.gestor.GestorUsuarios;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Properties;
 
 public class Controlador {
     GestorMateriales gestorMateriales = new GestorMateriales();
+    GestorUsuarios gestorUsuarios = new GestorUsuarios();
 
     public void iniciarPrograma() {
         //pruebaGuardarMateriales();
-        pruebaListarMateriales();
+        //pruebaListarMateriales();
+
+        //pruebaGuardarUsuarios();
+        pruebaListarUsuarios();
     }
 
     private void pruebaGuardarMateriales(){
@@ -33,6 +38,24 @@ public class Controlador {
 
         for (Material material : materiales) {
             System.out.println(material);
+        }
+    }
+
+    private void pruebaGuardarUsuarios(){
+        Estudiante estudiante = new Estudiante("001", "Fred", "Perez", EnumCarrera.ARTE, 12);
+        Profesor profesor = new Profesor("002", "Raul", "Vindas", EnumContrato.MEDIO_TIEMPO, LocalDate.parse("2010-10-23"));
+        Administrativo administrativo = new Administrativo("003", "Gabriel", "Zuñiga", EnumNombramiento.A, 16.2);
+
+        if(gestorUsuarios.guardarUsuario(estudiante)) System.out.println("1 Registrado correctamente");
+        if(gestorUsuarios.guardarUsuario(profesor)) System.out.println("2 Registrado correctamente");
+        if(gestorUsuarios.guardarUsuario(administrativo)) System.out.println("3 Registrado correctamente");
+    }
+
+    private void pruebaListarUsuarios(){
+        List<Usuario> usuarios = gestorUsuarios.listarUsuarios();
+
+        for (Usuario usuario : usuarios) {
+            System.out.println(usuario);
         }
     }
 }

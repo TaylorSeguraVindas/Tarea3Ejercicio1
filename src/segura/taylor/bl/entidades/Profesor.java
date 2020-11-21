@@ -26,6 +26,17 @@ public class Profesor extends Usuario{
     }
 
     //Constructores
+    public Profesor(){
+        this.tipoUsuario = EnumTipoUsuario.PROFESOR;
+    }
+    public Profesor(String[] datos) {
+        this.tipoUsuario = EnumTipoUsuario.PROFESOR;
+        this.id = datos[1];
+        this.nombre = datos[2];
+        this.apellido = datos[3];
+        this.contrato = EnumContrato.valueOf(datos[4]);
+        this.fechaContratacion = LocalDate.parse(datos[5]);
+    }
     public Profesor(String id, String nombre, String apellido, EnumContrato contrato, LocalDate fechaContratacion) {
         super(id, nombre, apellido);
         this.tipoUsuario = EnumTipoUsuario.PROFESOR;
@@ -34,7 +45,6 @@ public class Profesor extends Usuario{
     }
 
     //Metodos
-
     @Override
     public String toString() {
         return "Profesor{" +
@@ -42,5 +52,16 @@ public class Profesor extends Usuario{
                 "contrato=" + contrato +
                 ", fechaContratacion=" + fechaContratacion +
                 '}';
+    }
+
+    @Override
+    public String toCSV() {
+        String datos = this.tipoUsuario + "," +
+                this.id + "," +
+                this.nombre + "," +
+                this.apellido + "," +
+                this.contrato.toString() + "," +
+                this.fechaContratacion.toString();
+        return datos;
     }
 }

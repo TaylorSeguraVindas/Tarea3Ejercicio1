@@ -1,8 +1,9 @@
 package segura.taylor.bl.entidades;
 
 import segura.taylor.bl.enums.EnumTipoUsuario;
+import segura.taylor.bl.interfaces.SerializableCSV;
 
-public abstract class Usuario {
+public abstract class Usuario implements SerializableCSV {
     //Variables
     protected EnumTipoUsuario tipoUsuario;
     protected String id;
@@ -33,6 +34,8 @@ public abstract class Usuario {
     }
 
     //Constructores
+    public Usuario() {}
+    public Usuario(String[] datos){}
     public Usuario(String id, String nombre, String apellido) {
         this.id = id;
         this.nombre = nombre;
