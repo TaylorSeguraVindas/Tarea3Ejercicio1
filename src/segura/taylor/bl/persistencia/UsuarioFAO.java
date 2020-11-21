@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class UsuarioFAO {
-    private final String directorioUsuarios = "c:\\dev\\Usuarios.txt";
+    private final String directorioUsuarios = "c:\\dev\\Usuarios.csv";
 
     public boolean guardarNuevoUsuario(Usuario nuevoUsuario) {
         boolean idRepetido = buscarPorId(nuevoUsuario.getId()).isPresent();
