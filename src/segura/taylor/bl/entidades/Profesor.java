@@ -1,5 +1,8 @@
 package segura.taylor.bl.entidades;
 
+import segura.taylor.bl.enums.EnumContrato;
+import segura.taylor.bl.enums.EnumTipoUsuario;
+
 import java.time.LocalDate;
 
 public class Profesor extends Usuario{
@@ -25,6 +28,7 @@ public class Profesor extends Usuario{
     //Constructores
     public Profesor(String id, String nombre, String apellido, EnumContrato contrato, LocalDate fechaContratacion) {
         super(id, nombre, apellido);
+        this.tipoUsuario = EnumTipoUsuario.PROFESOR;
         this.contrato = contrato;
         this.fechaContratacion = fechaContratacion;
     }

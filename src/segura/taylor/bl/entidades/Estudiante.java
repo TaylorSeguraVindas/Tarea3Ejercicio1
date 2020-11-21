@@ -1,5 +1,8 @@
 package segura.taylor.bl.entidades;
 
+import segura.taylor.bl.enums.EnumCarrera;
+import segura.taylor.bl.enums.EnumTipoUsuario;
+
 public class Estudiante extends Usuario {
     //Variables
     private EnumCarrera carrera;
@@ -23,6 +26,7 @@ public class Estudiante extends Usuario {
     //Constructores
     public Estudiante(String id, String nombre, String apellido, EnumCarrera carrera, int creditos) {
         super(id, nombre, apellido);
+        this.tipoUsuario = EnumTipoUsuario.ESTUDIANTE;
         this.carrera = carrera;
         this.creditos = creditos;
     }

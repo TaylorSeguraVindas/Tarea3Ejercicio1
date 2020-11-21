@@ -1,15 +1,21 @@
 package segura.taylor.bl.entidades;
 
+import segura.taylor.bl.enums.EnumTema;
+import segura.taylor.bl.enums.EnumTipoMaterial;
+import segura.taylor.bl.interfaces.SerializableCSV;
+
 import java.time.LocalDate;
 
-public abstract class Material {
+public abstract class Material implements SerializableCSV {
     //Variables
+    protected EnumTipoMaterial tipoMaterial;
     protected String signatura;
     protected LocalDate fechaCompra;
     protected boolean restringido;
     protected EnumTema tema;
 
     //Propiedades
+    public EnumTipoMaterial getMaterial() { return tipoMaterial; }
     public String getSignatura() {
         return signatura;
     }
@@ -39,6 +45,8 @@ public abstract class Material {
     }
 
     //Constructores
+    public Material(){}
+    public Material(String[] datos){}
     public Material(String signatura, LocalDate fechaCompra, boolean restringido, EnumTema tema) {
         this.signatura = signatura;
         this.fechaCompra = fechaCompra;
@@ -49,7 +57,7 @@ public abstract class Material {
     //Metodos
     @Override
     public String toString() {
-        return "Material{" +
+        return "tipo= '" + tipoMaterial + "\'" +
                 "signatura='" + signatura + '\'' +
                 ", fechaCompra=" + fechaCompra +
                 ", restringido=" + restringido +

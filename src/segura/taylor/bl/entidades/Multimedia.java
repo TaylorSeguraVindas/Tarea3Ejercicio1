@@ -1,5 +1,8 @@
 package segura.taylor.bl.entidades;
 
+import segura.taylor.bl.enums.EnumFormato;
+import segura.taylor.bl.enums.EnumTema;
+
 import java.time.LocalDate;
 
 public abstract class Multimedia extends Material{
@@ -31,6 +34,7 @@ public abstract class Multimedia extends Material{
     }
 
     //Constructores
+    public Multimedia(){}
     public Multimedia(String signatura, LocalDate fechaCompra, boolean restringido, EnumTema tema, EnumFormato formato, double duracion, String idioma) {
         super(signatura, fechaCompra, restringido, tema);
         this.formato = formato;
@@ -41,8 +45,7 @@ public abstract class Multimedia extends Material{
     //Metodos
     @Override
     public String toString() {
-        return "Multimedia{" +
-                super.toString() +
+        return super.toString() +
                 "formato=" + formato +
                 ", duracion=" + duracion +
                 ", idioma='" + idioma + '\'' +

@@ -1,5 +1,8 @@
 package segura.taylor.bl.entidades;
 
+import segura.taylor.bl.enums.EnumNombramiento;
+import segura.taylor.bl.enums.EnumTipoUsuario;
+
 public class Administrativo extends Usuario{
     //Variables
     private EnumNombramiento tipoNombramiento;
@@ -23,6 +26,7 @@ public class Administrativo extends Usuario{
     //Constructores
     public Administrativo(String id, String nombre, String apellido, EnumNombramiento tipoNombramiento, double horasAsignadas) {
         super(id, nombre, apellido);
+        this.tipoUsuario = EnumTipoUsuario.ADMINISTRATIVO;
         this.tipoNombramiento = tipoNombramiento;
         this.horasAsignadas = horasAsignadas;
     }

@@ -1,5 +1,9 @@
 package segura.taylor.bl.entidades;
 
+import segura.taylor.bl.enums.EnumFormato;
+import segura.taylor.bl.enums.EnumTema;
+import segura.taylor.bl.enums.EnumTipoMaterial;
+
 import java.time.LocalDate;
 
 public class Otro extends Material{
@@ -15,8 +19,21 @@ public class Otro extends Material{
     }
 
     //Constructores
+    public Otro() {
+        this.tipoMaterial = EnumTipoMaterial.OTRO;
+    }
+    public Otro(String[] datos){
+        this.tipoMaterial = EnumTipoMaterial.OTRO;
+
+        this.signatura = datos[1];
+        this.fechaCompra = LocalDate.parse(datos[2]);
+        this.restringido = Boolean.parseBoolean(datos[3]);
+        this.tema = EnumTema.valueOf(datos[4]);
+        this.descripcion = datos[5];
+    }
     public Otro(String signatura, LocalDate fechaCompra, boolean restringido, EnumTema tema, String descripcion) {
         super(signatura, fechaCompra, restringido, tema);
+        this.tipoMaterial = EnumTipoMaterial.OTRO;
         this.descripcion = descripcion;
     }
 
@@ -28,5 +45,16 @@ public class Otro extends Material{
                 super.toString() +
                 "descripcion='" + descripcion + '\'' +
                 '}';
+    }
+
+    @Override
+    public String toCSV() {
+        String datos = this.tipoMaterial + "," +
+                this.signatura + "," +
+                this.fechaCompra.toString() + "," +
+                this.restringido + "," +
+                this.tema.toString() + "," +
+                this.descripcion;
+        return datos;
     }
 }

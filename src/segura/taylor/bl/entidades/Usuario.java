@@ -1,12 +1,16 @@
 package segura.taylor.bl.entidades;
 
+import segura.taylor.bl.enums.EnumTipoUsuario;
+
 public abstract class Usuario {
     //Variables
+    protected EnumTipoUsuario tipoUsuario;
     protected String id;
     protected String nombre;
     protected String apellido;
 
     //Propiedades
+    public EnumTipoUsuario getTipoUsuario() { return tipoUsuario; }
     public String getId() {
         return id;
     }
@@ -39,6 +43,7 @@ public abstract class Usuario {
     @Override
     public String toString() {
         return "Usuario{" +
+                "tipo= '" + tipoUsuario + "\'" +
                 "id='" + id + '\'' +
                 ", nombre='" + nombre + '\'' +
                 ", apellido='" + apellido + '\'' +
