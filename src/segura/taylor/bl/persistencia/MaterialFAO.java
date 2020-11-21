@@ -3,10 +3,7 @@ package segura.taylor.bl.persistencia;
 import segura.taylor.bl.entidades.*;
 import segura.taylor.bl.enums.EnumTipoMaterial;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -18,81 +15,102 @@ import java.util.Optional;
 public class MaterialFAO {
     private final String directorioMateriales = "c:\\dev\\Materiales.csv";
 
-    public void guardarNuevoMaterial(Material nuevoMaterial) {
-        ArrayList<String> lines = new ArrayList<>();
-        lines.add(nuevoMaterial.toCSV());
+    public boolean guardarNuevoMaterial(Material nuevoMaterial) {
+        boolean idRepetido = buscarPorId(nuevoMaterial.getSignatura()).isPresent();
 
-        try {
-            Files.write(Paths.get(directorioMateriales),lines, StandardCharsets.UTF_8, StandardOpenOption.CREATE,
-                    StandardOpenOption.APPEND);
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(!idRepetido) {
+            ArrayList<String> lines = new ArrayList<>();
+            lines.add(nuevoMaterial.toCSV());
+
+            try {
+                Files.write(Paths.get(directorioMateriales), lines, StandardCharsets.UTF_8, StandardOpenOption.CREATE,
+                        StandardOpenOption.APPEND);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return true;
         }
+        return false;
     }
 
     public List<Material> listarTodos() {
         ArrayList<Material> result = new ArrayList<>();
         BufferedReader reader;
-        try {
-            reader = new BufferedReader(new FileReader(directorioMateriales));
-            String currentLine = reader.readLine();
-            while (currentLine != null) {
-                String[] datos = currentLine.split(",");
-                result.add(leerMaterialCSV(datos));
 
-                currentLine = reader.readLine();
+        File archivoMateriales = new File(directorioMateriales);
+        if(archivoMateriales.exists()) {
+            try {
+                reader = new BufferedReader(new FileReader(directorioMateriales));
+                String currentLine = reader.readLine();
+                while (currentLine != null) {
+                    String[] datos = currentLine.split(",");
+                    result.add(leerMaterialCSV(datos));
+
+                    currentLine = reader.readLine();
+                }
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
+
         return result;
     }
 
     public List<Material> listarPorTipo(EnumTipoMaterial tipo) {
         ArrayList<Material> result = new ArrayList<>();
         BufferedReader reader;
-        try {
-            reader = new BufferedReader(new FileReader(directorioMateriales));
-            String currentLine = reader.readLine();
-            while (currentLine != null) {
-                String[] datos = currentLine.split(",");
-                //Filtrar por tipo.
-                if(EnumTipoMaterial.valueOf(datos[0]).equals(tipo)){
-                    result.add(leerMaterialCSV(datos));
+
+        File archivoMateriales = new File(directorioMateriales);
+        if(archivoMateriales.exists()) {
+            try {
+                reader = new BufferedReader(new FileReader(directorioMateriales));
+                String currentLine = reader.readLine();
+                while (currentLine != null) {
+                    String[] datos = currentLine.split(",");
+                    //Filtrar por tipo.
+                    if (EnumTipoMaterial.valueOf(datos[0]).equals(tipo)) {
+                        result.add(leerMaterialCSV(datos));
+                    }
+
+                    currentLine = reader.readLine();
                 }
 
-                currentLine = reader.readLine();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
         return result;
     }
 
     public Optional<Material> buscarPorId(String id) {
         BufferedReader reader;
-        try {
-            reader = new BufferedReader(new FileReader(directorioMateriales));
-            String currentLine = reader.readLine();
-            while (currentLine != null) {
-                String[] datos = currentLine.split(",");
-                //Filtrar por tipo.
-                if(datos[1].equals(id)){
-                    return Optional.of(leerMaterialCSV(datos));
+
+        File archivoMateriales = new File(directorioMateriales);
+        if(archivoMateriales.exists()) {
+            try {
+                reader = new BufferedReader(new FileReader(directorioMateriales));
+                String currentLine = reader.readLine();
+                while (currentLine != null) {
+                    String[] datos = currentLine.split(",");
+                    //Filtrar por signatura o id.
+                    if (datos[1].equals(id)) {
+                        return Optional.of(leerMaterialCSV(datos));
+                    }
+
+                    currentLine = reader.readLine();
                 }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-        return Optional.of(null);
+        return Optional.empty();
     }
 
 

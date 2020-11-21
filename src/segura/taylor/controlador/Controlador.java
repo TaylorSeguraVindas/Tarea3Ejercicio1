@@ -22,10 +22,10 @@ public class Controlador {
         Texto nuevoTexto = new Texto("003", LocalDate.parse("2020-02-01"), true, EnumTema.LETRA, "Las aves del más allá", "Taylor Segura", LocalDate.parse("1980-01-05"), 400, "Español");
         Otro nuevoOtro = new Otro("004", LocalDate.parse("2018-04-07"), false, EnumTema.ARTE, "Lo que sea");
 
-        gestorMateriales.guardarMaterial(nuevoAudio);
-        gestorMateriales.guardarMaterial(nuevoVideo);
-        gestorMateriales.guardarMaterial(nuevoTexto);
-        gestorMateriales.guardarMaterial(nuevoOtro);
+        if(gestorMateriales.guardarMaterial(nuevoAudio)) System.out.println("1 Guardado correctamente");
+        if(gestorMateriales.guardarMaterial(nuevoVideo)) System.out.println("2 Guardado correctamente");
+        if(gestorMateriales.guardarMaterial(nuevoTexto)) System.out.println("3 Guardado correctamente");
+        if(gestorMateriales.guardarMaterial(nuevoOtro)) System.out.println("4 Guardado correctamente");
     }
 
     private void pruebaListarMateriales(){

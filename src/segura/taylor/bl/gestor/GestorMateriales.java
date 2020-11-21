@@ -15,8 +15,8 @@ import java.util.Optional;
 public class GestorMateriales {
     MaterialFAO materialFAO = new MaterialFAO();
 
-    public void guardarMaterial(Material pMaterial) {
-        materialFAO.guardarNuevoMaterial(pMaterial);
+    public boolean guardarMaterial(Material pMaterial) {
+        return materialFAO.guardarNuevoMaterial(pMaterial);
     }
 
     public List<Material> listarMateriales() {
