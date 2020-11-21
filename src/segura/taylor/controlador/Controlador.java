@@ -62,6 +62,7 @@ public class Controlador {
                 break;
         }
     }
+
     private void registrarMaterial() {
         //Tipo
         int opcionTipoMaterial;
@@ -253,7 +254,154 @@ public class Controlador {
     }
 
     private void registrarUsuario() {
+        boolean resultado = false;
 
+        //Tipo
+        int opcionTipoUsuario;
+        do {
+            ui.imprimirLinea("Seleccione un tipo de usuario");
+            ui.imprimirLinea("1. Estudiante");
+            ui.imprimirLinea("2. Profesor");
+            ui.imprimirLinea("3. Administrativo");
+            ui.imprimir("Su opcion: ");
+            opcionTipoUsuario = ui.leerEntero();
+
+            if(opcionTipoUsuario < 1 || opcionTipoUsuario > 3) {
+                ui.imprimirLinea("Opcion invalida\n\n");
+            }
+        } while (opcionTipoUsuario < 1 || opcionTipoUsuario > 3);
+
+        //Datos generales
+        ui.imprimir("Id: ");
+        String id = ui.leerLinea();
+        ui.imprimir("Nombre: ");
+        String nombre = ui.leerLinea();
+        ui.imprimir("Apellido: ");
+        String apellido = ui.leerLinea();
+
+        //Datos especializados para cada tipo de usuario
+        switch (opcionTipoUsuario) {
+            case 1:
+                int opcionCarrera;
+                EnumCarrera carrera = EnumCarrera.ARTE;
+
+                do {
+                    ui.imprimirLinea("Seleccione una carrera");
+                    ui.imprimirLinea("1. Arte");
+                    ui.imprimirLinea("2. Administracion de empresas");
+                    ui.imprimirLinea("3. Ingenieria de software");
+                    ui.imprimirLinea("4. Ingles");
+                    ui.imprimirLinea("5. Contabilidad");
+                    ui.imprimirLinea("6. Periodismo");
+                    ui.imprimir("Su opcion: ");
+                    opcionCarrera = ui.leerEntero();
+
+                    if (opcionCarrera < 1 || opcionCarrera > 6) {
+                        ui.imprimirLinea("Opcion invalida");
+                    }
+                } while (opcionCarrera < 1 || opcionCarrera > 6);
+                switch (opcionCarrera) {
+                    case 1:
+                        carrera = EnumCarrera.ARTE;
+                        break;
+                    case 2:
+                        carrera = EnumCarrera.ADMIN_EMPRESAS;
+                        break;
+                    case 3:
+                        carrera = EnumCarrera.ING_SOFTWARE;
+                        break;
+                    case 4:
+                        carrera = EnumCarrera.INGLES;
+                        break;
+                    case 5:
+                        carrera = EnumCarrera.CONTABILIDAD;
+                        break;
+                    case 6:
+                        carrera = EnumCarrera.PERIODISMO;
+                        break;
+                }
+
+                ui.imprimir("Creditos: ");
+                int creditos = ui.leerEntero();
+
+                Estudiante nuevoEstudiante = new Estudiante(id, nombre, apellido, carrera, creditos);
+                resultado = gestorUsuarios.guardarUsuario(nuevoEstudiante);
+                break;
+            case 2:
+                int opcionContrato;
+                EnumContrato contrato = EnumContrato.COMPLETO;
+
+                do {
+                    ui.imprimirLinea("Seleccione un contrato");
+                    ui.imprimirLinea("1. Tiempo");
+                    ui.imprimirLinea("2. Completo");
+                    ui.imprimirLinea("3. Medio tiempo");
+                    ui.imprimir("Su opcion: ");
+                    opcionContrato = ui.leerEntero();
+
+                    if(opcionContrato < 1 || opcionContrato > 3) {
+                        ui.imprimirLinea("Opcion invalida");
+                    }
+                } while (opcionContrato < 1 || opcionContrato > 3);
+                switch (opcionContrato) {
+                    case 1:
+                        contrato = EnumContrato.TIEMPO;
+                        break;
+                    case 2:
+                        contrato = EnumContrato.COMPLETO;
+                        break;
+                    case 3:
+                        contrato = EnumContrato.MEDIO_TIEMPO;
+                        break;
+                }
+
+                ui.imprimir("Fecha contratacion(yyyy-mm-dd): ");
+                LocalDate fechaContratacion = LocalDate.parse(ui.leerLinea());
+
+                Profesor nuevoProfesor = new Profesor(id, nombre, apellido, contrato, fechaContratacion);
+                resultado = gestorUsuarios.guardarUsuario(nuevoProfesor);
+                break;
+            case 3:
+                int opcionNombramiento;
+                EnumNombramiento nombramiento = EnumNombramiento.A;
+
+                do {
+                    ui.imprimirLinea("Seleccione un nombramiento");
+                    ui.imprimirLinea("1. A");
+                    ui.imprimirLinea("2. B");
+                    ui.imprimirLinea("3. C");
+                    ui.imprimir("Su opcion: ");
+                    opcionContrato = ui.leerEntero();
+
+                    if(opcionContrato < 1 || opcionContrato > 3) {
+                        ui.imprimirLinea("Opcion invalida");
+                    }
+                } while (opcionContrato < 1 || opcionContrato > 3);
+                switch (opcionContrato) {
+                    case 1:
+                        nombramiento = EnumNombramiento.A;
+                        break;
+                    case 2:
+                        nombramiento = EnumNombramiento.B;
+                        break;
+                    case 3:
+                        nombramiento = EnumNombramiento.C;
+                        break;
+                }
+
+                ui.imprimir("Horas asignadas: ");
+                int horasAsignadas = ui.leerEntero();
+
+                Administrativo nuevoAdministrativo = new Administrativo(id, nombre, apellido, nombramiento, horasAsignadas);
+                resultado = gestorUsuarios.guardarUsuario(nuevoAdministrativo);
+                break;
+        }
+
+        if(resultado) {
+            ui.imprimirLinea("Usuario registrado correctamente");
+        } else {
+            ui.imprimirLinea("Ya existe un usuario con el id especificado");
+        }
     }
     private void listarUsuarios() {
         List<Usuario> usuarios = gestorUsuarios.listarUsuarios();
@@ -262,6 +410,7 @@ public class Controlador {
             ui.imprimirLinea(usuario.toString());
         }
     }
+
     private void pruebaGuardarMateriales(){
         Audio nuevoAudio = new Audio("001", LocalDate.parse("2020-01-01"), false, EnumTema.ARTE, EnumFormato.CD, 1.48, "Ingles");
         Video nuevoVideo = new Video("002", LocalDate.parse("2020-02-01"), false, EnumTema.LETRA, EnumFormato.DVD, 2.44, "Frances", "Niko Bellic");
