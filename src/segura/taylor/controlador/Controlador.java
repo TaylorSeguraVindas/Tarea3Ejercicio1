@@ -3,15 +3,19 @@ package segura.taylor.controlador;
 import segura.taylor.bl.entidades.*;
 import segura.taylor.bl.enums.*;
 import segura.taylor.bl.gestor.GestorMateriales;
+import segura.taylor.bl.gestor.GestorPrestamos;
 import segura.taylor.bl.gestor.GestorUsuarios;
 import segura.taylor.ui.UI;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Controlador {
     GestorMateriales gestorMateriales = new GestorMateriales();
     GestorUsuarios gestorUsuarios = new GestorUsuarios();
+    GestorPrestamos gestorPrestamos = new GestorPrestamos();
 
     UI ui = new UI();
 
@@ -25,7 +29,7 @@ public class Controlador {
         do {
             opcion = mostrarMenu();
             procesarOpcion(opcion);
-        } while (opcion != 5);
+        } while (opcion != 8);
     }
 
     private int mostrarMenu() {
@@ -34,7 +38,10 @@ public class Controlador {
         ui.imprimirLinea("2. Listar materiales");
         ui.imprimirLinea("3. Registrar usuario");
         ui.imprimirLinea("4. Listar usuarios");
-        ui.imprimirLinea("5. Salir");
+        ui.imprimirLinea("5. Realizar prestamo");
+        ui.imprimirLinea("6. Realizar devolucion");
+        ui.imprimirLinea("7. Listar prestamos");
+        ui.imprimirLinea("8. Salir");
         ui.imprimir("Su opcion: ");
         int opcion = ui.leerEntero();
         return opcion;
@@ -55,6 +62,15 @@ public class Controlador {
                 listarUsuarios();
                 break;
             case 5:
+                registrarPrestamo();
+                break;
+            case 6:
+                realizarDevolucion();
+                break;
+            case 7:
+                listarPrestamos();
+                break;
+            case 8:
                 ui.imprimirLinea("Adios");
                 break;
             default:
@@ -411,6 +427,71 @@ public class Controlador {
         }
     }
 
+    private void registrarPrestamo() {
+        ui.imprimir("Ingrese el id del usuario que realiza el prestamo: ");
+        String idUsuario = ui.leerLinea();
+
+        Optional<Usuario> usuario = gestorUsuarios.buscarPorId(idUsuario);
+
+        if(usuario.isPresent()) {
+            if (!gestorPrestamos.buscarPendiente(idUsuario).isPresent()) {
+                ui.imprimir("ID prestamo: ");
+                String id = ui.leerLinea();
+                ui.imprimirLinea("Fecha devolucion(yyyy-mm-dd): ");
+                LocalDate fechaDevolucion = LocalDate.parse(ui.leerLinea());
+
+                LocalDate fechaCreacion = LocalDate.now();
+                boolean completado = false;
+
+                //Materiales
+                ArrayList<Material> items = new ArrayList<>();
+                boolean agregarMateriales = true;
+
+                do {
+                    listarMateriales();
+                    ui.imprimirLinea("Ingrese el id del material que desea incluir: ");
+                    String idMaterial = ui.leerLinea();
+
+                    Optional<Material> material = gestorMateriales.buscarPorId(idMaterial);
+                    if(material.isPresent()) {
+                        items.add(material.get());
+                        ui.imprimirLinea("Material agregado correctamente");
+                    } else {
+                        ui.imprimirLinea("No se encontró el material");
+                    }
+
+                    ui.imprimirLinea("\n\nDesea agregar otro material?");
+                    ui.imprimirLinea("1. Si");
+                    ui.imprimirLinea("2. No");
+
+                    agregarMateriales = (ui.leerEntero() == 1);
+                } while (agregarMateriales);
+
+                Prestamo nuevoPrestamo = new Prestamo(id, usuario.get(), items, fechaCreacion, fechaDevolucion, false);
+                boolean resultado = gestorPrestamos.guardarPrestamo(nuevoPrestamo);
+
+                if(resultado) {
+                    ui.imprimirLinea("Prestamo registrado correctamente");
+                } else {
+                    ui.imprimirLinea("Ocurrió un problema al registrar el prestamo");
+                }
+            } else {
+                ui.imprimirLinea("El usuario no puede realizar el prestamo porque ya tiene uno pendiente");
+            }
+        } else {
+            ui.imprimirLinea("El usuario no existe");
+        }
+    }
+    private void realizarDevolucion() {
+
+    }
+    private void listarPrestamos() {
+        List<Prestamo> prestamos = gestorPrestamos.listarPrestamos();
+
+        for (Prestamo prestamo : prestamos) {
+            ui.imprimirLinea(prestamo.toString());
+        }
+    }
     private void pruebaGuardarMateriales(){
         Audio nuevoAudio = new Audio("001", LocalDate.parse("2020-01-01"), false, EnumTema.ARTE, EnumFormato.CD, 1.48, "Ingles");
         Video nuevoVideo = new Video("002", LocalDate.parse("2020-02-01"), false, EnumTema.LETRA, EnumFormato.DVD, 2.44, "Frances", "Niko Bellic");
