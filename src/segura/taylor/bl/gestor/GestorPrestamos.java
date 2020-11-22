@@ -24,4 +24,9 @@ public class GestorPrestamos {
     public Optional<Prestamo> buscarPendiente(String idUsuario) {
         return PrestamoFAO.buscarPendiente(idUsuario);
     }
+
+    public boolean completarDevolucion(Prestamo prestamo) {
+        prestamo.setCompletado(true);
+        return PrestamoFAO.modificarPrestamo(prestamo);
+    }
 }

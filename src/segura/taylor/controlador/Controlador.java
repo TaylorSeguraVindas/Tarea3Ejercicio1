@@ -8,6 +8,7 @@ import segura.taylor.bl.gestor.GestorUsuarios;
 import segura.taylor.ui.UI;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -483,7 +484,33 @@ public class Controlador {
         }
     }
     private void realizarDevolucion() {
+        ui.imprimir("Ingrese el id del usuario que realiza el la devolucion: ");
+        String idUsuario = ui.leerLinea();
 
+        Optional<Usuario> usuario = gestorUsuarios.buscarPorId(idUsuario);
+
+        if(usuario.isPresent()) {
+            Optional<Prestamo> prestamo = gestorPrestamos.buscarPendiente(idUsuario);
+            if (prestamo.isPresent()) {
+                boolean resultado = gestorPrestamos.completarDevolucion(prestamo.get());
+
+                Period period = Period.between(prestamo.get().getFechaDevolucion(), LocalDate.now());
+
+                if(period.getDays() > 0) {
+                    ui.imprimirLinea("La entrega está atrasada por lo que debe pagar la multa.");
+                }
+
+                if(resultado) {
+                    ui.imprimirLinea("Devolucion realizada correctamente");
+                } else {
+                    ui.imprimirLinea("Ocurrió un problema al realizar la devolucion");
+                }
+            } else {
+                ui.imprimirLinea("El usuario no tiene prestamos pendientes");
+            }
+        } else {
+            ui.imprimirLinea("El usuario no existe");
+        }
     }
     private void listarPrestamos() {
         List<Prestamo> prestamos = gestorPrestamos.listarPrestamos();

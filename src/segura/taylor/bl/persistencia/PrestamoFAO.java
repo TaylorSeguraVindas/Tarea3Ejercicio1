@@ -35,6 +35,54 @@ public class PrestamoFAO {
         }
         return false;
     }
+    public boolean modificarPrestamo(Prestamo prestamo) {
+        ArrayList<String> result = new ArrayList<>();
+        BufferedReader reader;
+
+        File archivoPrestamos = new File(directorioPrestamos);
+        if(archivoPrestamos.exists()) {
+            try {
+                int indicePrestamo = -1;
+                int cont = 0;
+
+                reader = new BufferedReader(new FileReader(directorioPrestamos));
+                String currentLine = reader.readLine();
+
+                while (currentLine != null) {
+                    String[] datos = currentLine.split(",");
+                    result.add(currentLine);
+
+                    //Guardar el indice del prestamo que se va a modificar.
+                    if(datos[0].equals(prestamo.getId())) {
+                        indicePrestamo = cont;
+                    }
+
+                    currentLine = reader.readLine();
+                    cont++;
+                }
+
+                //Si el prestamo se encontró
+                if(indicePrestamo != -1) {
+                    //Se actualiza la informacion
+                    result.set(indicePrestamo, prestamo.toCSV());
+
+                    //Y se sobreescribe todo el archivo para aplicar el cambio.
+                    try {
+                        Files.write(Paths.get(directorioPrestamos), result, StandardCharsets.UTF_8, StandardOpenOption.CREATE,
+                                StandardOpenOption.WRITE);
+                        return true;
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
 
     public List<Prestamo> listarTodos() {
         ArrayList<Prestamo> result = new ArrayList<>();
@@ -46,8 +94,13 @@ public class PrestamoFAO {
                 reader = new BufferedReader(new FileReader(directorioPrestamos));
                 String currentLine = reader.readLine();
                 while (currentLine != null) {
-                    String[] datos = currentLine.split(",");
-                    result.add(leerPrestamoCSV(datos));
+                    //Aveces se crean lineas en blanco por alguna razon.
+                    if(currentLine.length() > 0) {
+                        String[] datos = currentLine.split(",");
+                        if(datos.length > 0){
+                            result.add(leerPrestamoCSV(datos));
+                        }
+                    }
 
                     currentLine = reader.readLine();
                 }
@@ -72,8 +125,8 @@ public class PrestamoFAO {
                 String currentLine = reader.readLine();
                 while (currentLine != null) {
                     String[] datos = currentLine.split(",");
-                    //Filtrar por signatura o id.
-                    if (datos[1].equals(id)) {
+                    //Filtrar por id.
+                    if (datos[0].equals(id)) {
                         return Optional.of(leerPrestamoCSV(datos));
                     }
 
@@ -96,10 +149,14 @@ public class PrestamoFAO {
                 reader = new BufferedReader(new FileReader(directorioPrestamos));
                 String currentLine = reader.readLine();
                 while (currentLine != null) {
-                    String[] datos = currentLine.split(",");
-                    //Filtrar por signatura o id.
-                    if (datos[1].equals(idUsuario) && Boolean.parseBoolean(datos[4]) == false) {
-                        return Optional.of(leerPrestamoCSV(datos));
+                    //Aveces se crean lineas en blanco por alguna razon.
+                    if(currentLine.length() > 0) {
+                        String[] datos = currentLine.split(",");
+
+                        //Filtrar por id.
+                        if (datos[1].equals(idUsuario) && datos[4].equals("false")) {
+                            return Optional.of(leerPrestamoCSV(datos));
+                        }
                     }
 
                     currentLine = reader.readLine();
