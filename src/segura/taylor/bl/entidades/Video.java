@@ -22,6 +22,10 @@ public class Video extends Multimedia{
     public Video() {
         this.tipoMaterial = EnumTipoMaterial.VIDEO;
     }
+    /**
+     * Metodo constructor usado para crear una instancia basada en texto
+     * @param datos array de String con los datos necesarios para crear la instancia
+     */
     public Video(String[] datos){
         this.tipoMaterial = EnumTipoMaterial.VIDEO;
 
@@ -34,6 +38,18 @@ public class Video extends Multimedia{
         this.idioma = datos[7];
         this.director = datos[8];
     }
+
+    /**
+     * Metodo constructor
+     * @param signatura String que define la signatura
+     * @param fechaCompra LocalDate que define la fecha de compra
+     * @param restringido boolean que define si es restringido o no
+     * @param tema valor de EnumTema que define el tema
+     * @param formato valor de EnumFormato que define el formato
+     * @param duracion double que define la duracion
+     * @param idioma String que define el idioma
+     * @param director String que define el director
+     */
     public Video(String signatura, LocalDate fechaCompra, boolean restringido, EnumTema tema, EnumFormato formato, double duracion, String idioma, String director) {
         super(signatura, fechaCompra, restringido, tema, formato, duracion, idioma);
         this.director = director;

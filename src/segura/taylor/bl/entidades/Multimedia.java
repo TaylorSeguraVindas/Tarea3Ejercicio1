@@ -35,6 +35,19 @@ public abstract class Multimedia extends Material{
 
     //Constructores
     public Multimedia(){}
+
+    /**
+     * Metodo constructor
+     * @param signatura String que define la signatura
+     * @param fechaCompra LocalDate que define la fecha de compra
+     * @param restringido boolean que define si es restringido o no
+     * @param tema valor de EnumTema que define el tema
+     * @param formato valor de EnumFormato que define el formato
+     * @param duracion double que define la duracion
+     * @param idioma String que define el idioma
+     * @see EnumTema
+     * @see EnumFormato
+     */
     public Multimedia(String signatura, LocalDate fechaCompra, boolean restringido, EnumTema tema, EnumFormato formato, double duracion, String idioma) {
         super(signatura, fechaCompra, restringido, tema);
         this.formato = formato;

@@ -59,6 +59,10 @@ public class Prestamo implements SerializableCSV {
 
     //Constructores
     public Prestamo(){}
+    /**
+     * Metodo constructor usado para crear una instancia basada en texto
+     * @param datos array de String con los datos necesarios para crear la instancia
+     */
     public Prestamo(String[] datos) {
         this.id = datos[0];
         this.fechaCreacion = LocalDate.parse(datos[2]);
@@ -67,6 +71,18 @@ public class Prestamo implements SerializableCSV {
         //Usuario y items se asignan desde el FAO.
         this.items = new ArrayList<>();
     }
+
+    /**
+     * Metodo constructor
+     * @param id String que define el id
+     * @param usuario instancia de la clase Usuario que define el usuario
+     * @param items ArrayList de Materiales que define los items
+     * @param fechaCreacion LocalDate que define la fecha de creacion
+     * @param fechaDevolucion LocalDate que define la fecha de devolucion
+     * @param completado boolean que define si está completado o no
+     * @see Usuario
+     * @see Material
+     */
     public Prestamo(String id, Usuario usuario, ArrayList<Material> items, LocalDate fechaCreacion, LocalDate fechaDevolucion, boolean completado) {
         this.id = id;
         this.usuario = usuario;

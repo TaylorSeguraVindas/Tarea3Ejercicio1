@@ -29,6 +29,10 @@ public class Profesor extends Usuario{
     public Profesor(){
         this.tipoUsuario = EnumTipoUsuario.PROFESOR;
     }
+    /**
+     * Metodo constructor usado para crear una instancia basada en texto
+     * @param datos array de String con los datos necesarios para crear la instancia
+     */
     public Profesor(String[] datos) {
         this.tipoUsuario = EnumTipoUsuario.PROFESOR;
         this.id = datos[1];
@@ -37,6 +41,16 @@ public class Profesor extends Usuario{
         this.contrato = EnumContrato.valueOf(datos[4]);
         this.fechaContratacion = LocalDate.parse(datos[5]);
     }
+
+    /**
+     * Metodo constructor
+     * @param id String que define el id
+     * @param nombre String que define el nombre
+     * @param apellido String que define el apellido
+     * @param contrato valor de EnumContrato que define el contrato
+     * @param fechaContratacion LocalDate que define la fecha de contratacion
+     * @see EnumContrato
+     */
     public Profesor(String id, String nombre, String apellido, EnumContrato contrato, LocalDate fechaContratacion) {
         super(id, nombre, apellido);
         this.tipoUsuario = EnumTipoUsuario.PROFESOR;

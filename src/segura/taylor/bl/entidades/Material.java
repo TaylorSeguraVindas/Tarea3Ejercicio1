@@ -46,7 +46,20 @@ public abstract class Material implements SerializableCSV {
 
     //Constructores
     public Material(){}
+    /**
+     * Metodo constructor usado para crear una instancia basada en texto
+     * @param datos array de String con los datos necesarios para crear la instancia
+     */
     public Material(String[] datos){}
+
+    /**
+     * Metodo constructor
+     * @param signatura String que define la signatura
+     * @param fechaCompra LocalDate que define la fecha de compra
+     * @param restringido boolean que define si es restringido o no
+     * @param tema valor de EnumTema que define el tema
+     * @see EnumTema
+     */
     public Material(String signatura, LocalDate fechaCompra, boolean restringido, EnumTema tema) {
         this.signatura = signatura;
         this.fechaCompra = fechaCompra;

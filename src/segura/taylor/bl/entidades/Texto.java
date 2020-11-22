@@ -53,6 +53,11 @@ public class Texto extends Material{
     public Texto() {
         this.tipoMaterial = EnumTipoMaterial.TEXTO;
     }
+
+    /**
+     * Metodo constructor usado para crear una instancia basada en texto
+     * @param datos array de String con los datos necesarios para crear la instancia
+     */
     public Texto(String[] datos){
         this.tipoMaterial = EnumTipoMaterial.OTRO;
 
@@ -66,6 +71,19 @@ public class Texto extends Material{
         this.cantPaginas = Integer.parseInt(datos[8]);
         this.idioma = datos[9];
     }
+
+    /**
+     * Metodo constructor
+     * @param signatura String que define la signatura
+     * @param fechaCompra LocalDate que define la fecha de compra
+     * @param restringido boolean que define si es restringido o no
+     * @param tema valor de EnumTema que define el tema
+     * @param titulo String que define el titulo
+     * @param nombreAutor String que define el nombre del autor
+     * @param fechaPublicacion LocalDate que define la fecha de publicacion
+     * @param cantPaginas int que define la cantidad de paginas
+     * @param idioma String que define el idioma
+     */
     public Texto(String signatura, LocalDate fechaCompra, boolean restringido, EnumTema tema, String titulo, String nombreAutor, LocalDate fechaPublicacion, int cantPaginas, String idioma) {
         super(signatura, fechaCompra, restringido, tema);
         this.tipoMaterial = EnumTipoMaterial.TEXTO;

@@ -35,7 +35,18 @@ public abstract class Usuario implements SerializableCSV {
 
     //Constructores
     public Usuario() {}
+    /**
+     * Metodo constructor usado para crear una instancia basada en texto
+     * @param datos array de String con los datos necesarios para crear la instancia
+     */
     public Usuario(String[] datos){}
+
+    /**
+     * Metodo constructor
+     * @param id String que define el id
+     * @param nombre String que define el nombre
+     * @param apellido String que define el apellido
+     */
     public Usuario(String id, String nombre, String apellido) {
         this.id = id;
         this.nombre = nombre;

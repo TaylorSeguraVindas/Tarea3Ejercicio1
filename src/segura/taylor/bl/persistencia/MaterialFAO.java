@@ -2,7 +2,6 @@ package segura.taylor.bl.persistencia;
 
 import segura.taylor.bl.entidades.*;
 import segura.taylor.bl.enums.EnumTipoMaterial;
-import segura.taylor.bl.interfaces.SerializableCSV;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -13,9 +12,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * La clase FAO se encarga de toda la lógica de acceso a los archivos ya sea para lectura o escritura
+ *
+ * @author Taylor Segura Vindas
+ * @version 1.0
+ * @since 2020-11-22
+ */
 public class MaterialFAO {
     private final String directorioMateriales = "c:\\dev\\Materiales.csv";
 
+    /**
+     * Metodo para guardar un nuevo material en el archivo
+     * @param nuevoMaterial instancia de la clase Material que será almacenado
+     * @return true si se realiza correctamente, false si ocurre un error
+     * @see Material
+     */
     public boolean guardarNuevoMaterial(Material nuevoMaterial) {
         boolean idRepetido = buscarPorId(nuevoMaterial.getSignatura()).isPresent();
 
@@ -31,9 +43,16 @@ public class MaterialFAO {
             }
             return true;
         }
+
         return false;
     }
 
+    /**
+     * Metodo usado para leer todos los materiales del archivo
+     * @return una lista con todos los materiales almacenados
+     * @see List
+     * @see Material
+     */
     public List<Material> listarTodos() {
         ArrayList<Material> result = new ArrayList<>();
         BufferedReader reader;
@@ -60,6 +79,13 @@ public class MaterialFAO {
         return result;
     }
 
+    /**
+     * Metodo usado si se quiere realizar una lista de materiales filtrado por tipo
+     * @param tipo valor del EnumTipoMaterial que define el tipo que se debe mostrar
+     * @return lista que contiene instancias de la clase Material del tipo especificado
+     * @see EnumTipoMaterial
+     * @see Material
+     */
     public List<Material> listarPorTipo(EnumTipoMaterial tipo) {
         ArrayList<Material> result = new ArrayList<>();
         BufferedReader reader;
@@ -88,6 +114,12 @@ public class MaterialFAO {
         return result;
     }
 
+    /**
+     * Metodo usado para buscar un material usando como filtro el id especificado
+     * @param id identificador del material que se busca
+     * @return instancia de la clase material que coincide con el identificador enviado
+     * @see Material
+     */
     public Optional<Material> buscarPorId(String id) {
         BufferedReader reader;
 
@@ -114,6 +146,12 @@ public class MaterialFAO {
         return Optional.empty();
     }
 
+    /**
+     * Metodo usado para generar instancias de la clase material usando datos leidos de un archivo
+     * @param datosLinea un arreglo de String con los datos necesarios para inicializar la clase
+     * @return una instancia de la clase Material
+     * @see Material
+     */
     private Material leerMaterialCSV(String[] datosLinea) {
         EnumTipoMaterial tipoMaterial = EnumTipoMaterial.valueOf(datosLinea[0]);    //El primer atributo siempre define el tipo de material
 

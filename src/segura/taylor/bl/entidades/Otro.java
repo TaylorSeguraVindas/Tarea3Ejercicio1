@@ -22,6 +22,10 @@ public class Otro extends Material{
     public Otro() {
         this.tipoMaterial = EnumTipoMaterial.OTRO;
     }
+    /**
+     * Metodo constructor usado para crear una instancia basada en texto
+     * @param datos array de String con los datos necesarios para crear la instancia
+     */
     public Otro(String[] datos){
         this.tipoMaterial = EnumTipoMaterial.OTRO;
 
@@ -31,6 +35,16 @@ public class Otro extends Material{
         this.tema = EnumTema.valueOf(datos[4]);
         this.descripcion = datos[5];
     }
+
+    /**
+     * Metodo constructor
+     * @param signatura String que define la signatura
+     * @param fechaCompra LocalDate que define la fecha de compra
+     * @param restringido boolean que define si es restringido o no
+     * @param tema valor de EnumTema que define el tema
+     * @param descripcion String que define la descripcion
+     * @see EnumTema
+     */
     public Otro(String signatura, LocalDate fechaCompra, boolean restringido, EnumTema tema, String descripcion) {
         super(signatura, fechaCompra, restringido, tema);
         this.tipoMaterial = EnumTipoMaterial.OTRO;

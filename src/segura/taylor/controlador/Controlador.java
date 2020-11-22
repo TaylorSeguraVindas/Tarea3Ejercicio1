@@ -13,6 +13,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * La clase Controlador se usa para realizar la comunicación entre
+ * el UI y los Gestores
+ *
+ * @author Taylor Segura Vindas
+ * @version 1.0
+ * @since 2020-11-22
+ */
 public class Controlador {
     GestorMateriales gestorMateriales = new GestorMateriales();
     GestorUsuarios gestorUsuarios = new GestorUsuarios();
@@ -20,6 +28,9 @@ public class Controlador {
 
     UI ui = new UI();
 
+    /**
+     * Metodo usado para iniciar la ejecucion del programa
+     */
     public void iniciarPrograma() {
         //Pruebas
         //pruebaGuardarMateriales();
@@ -33,6 +44,10 @@ public class Controlador {
         } while (opcion != 8);
     }
 
+    /**
+     * Metodo usado para obtener la accion que desea realizar el usuario
+     * @return la opcion seleccionada por el usuario
+     */
     private int mostrarMenu() {
         ui.imprimirLinea("Bienvenido, seleccione una opción");
         ui.imprimirLinea("1. Registrar material");
@@ -48,6 +63,10 @@ public class Controlador {
         return opcion;
     }
 
+    /**
+     * Metodo usado para determinar la siguiente accion que debe realizar el programa
+     * @param opcion entero que define la siguiente accion del programa
+     */
     private void procesarOpcion(int opcion) {
         switch (opcion) {
             case 1:
@@ -80,6 +99,9 @@ public class Controlador {
         }
     }
 
+    /**
+     * Metodo usado para registrar materiales
+     */
     private void registrarMaterial() {
         //Tipo
         int opcionTipoMaterial;
@@ -262,6 +284,9 @@ public class Controlador {
             ui.imprimirLinea("Ya existe un material con el id especificado");
         }
     }
+    /**
+     * Metodo usado para listar materiales
+     */
     private void listarMateriales() {
         List<Material> materiales = gestorMateriales.listarMateriales();
 
@@ -270,6 +295,9 @@ public class Controlador {
         }
     }
 
+    /**
+     * Metodo usado para registrar usuarios
+     */
     private void registrarUsuario() {
         boolean resultado = false;
 
@@ -420,6 +448,9 @@ public class Controlador {
             ui.imprimirLinea("Ya existe un usuario con el id especificado");
         }
     }
+    /**
+     * Metodo usado para listar usuarios
+     */
     private void listarUsuarios() {
         List<Usuario> usuarios = gestorUsuarios.listarUsuarios();
 
@@ -428,6 +459,9 @@ public class Controlador {
         }
     }
 
+    /**
+     * Metodo usado para registrar prestamos
+     */
     private void registrarPrestamo() {
         ui.imprimir("Ingrese el id del usuario que realiza el prestamo: ");
         String idUsuario = ui.leerLinea();
@@ -483,6 +517,9 @@ public class Controlador {
             ui.imprimirLinea("El usuario no existe");
         }
     }
+    /**
+     * Metodo usado para completar prestamos
+     */
     private void realizarDevolucion() {
         ui.imprimir("Ingrese el id del usuario que realiza la devolucion: ");
         String idUsuario = ui.leerLinea();
@@ -512,31 +549,14 @@ public class Controlador {
             ui.imprimirLinea("El usuario no existe");
         }
     }
+    /**
+     * Metodo usado para listar prestamos
+     */
     private void listarPrestamos() {
         List<Prestamo> prestamos = gestorPrestamos.listarPrestamos();
 
         for (Prestamo prestamo : prestamos) {
             ui.imprimirLinea(prestamo.toString());
         }
-    }
-    private void pruebaGuardarMateriales(){
-        Audio nuevoAudio = new Audio("001", LocalDate.parse("2020-01-01"), false, EnumTema.ARTE, EnumFormato.CD, 1.48, "Ingles");
-        Video nuevoVideo = new Video("002", LocalDate.parse("2020-02-01"), false, EnumTema.LETRA, EnumFormato.DVD, 2.44, "Frances", "Niko Bellic");
-        Texto nuevoTexto = new Texto("003", LocalDate.parse("2020-02-01"), true, EnumTema.LETRA, "Las aves del más allá", "Taylor Segura", LocalDate.parse("1980-01-05"), 400, "Español");
-        Otro nuevoOtro = new Otro("004", LocalDate.parse("2018-04-07"), false, EnumTema.ARTE, "Lo que sea");
-
-        if(gestorMateriales.guardarMaterial(nuevoAudio)) System.out.println("1 Guardado correctamente");
-        if(gestorMateriales.guardarMaterial(nuevoVideo)) System.out.println("2 Guardado correctamente");
-        if(gestorMateriales.guardarMaterial(nuevoTexto)) System.out.println("3 Guardado correctamente");
-        if(gestorMateriales.guardarMaterial(nuevoOtro)) System.out.println("4 Guardado correctamente");
-    }
-    private void pruebaGuardarUsuarios(){
-        Estudiante estudiante = new Estudiante("001", "Fred", "Perez", EnumCarrera.ARTE, 12);
-        Profesor profesor = new Profesor("002", "Raul", "Vindas", EnumContrato.MEDIO_TIEMPO, LocalDate.parse("2010-10-23"));
-        Administrativo administrativo = new Administrativo("003", "Gabriel", "Zuñiga", EnumNombramiento.A, 16.2);
-
-        if(gestorUsuarios.guardarUsuario(estudiante)) System.out.println("1 Registrado correctamente");
-        if(gestorUsuarios.guardarUsuario(profesor)) System.out.println("2 Registrado correctamente");
-        if(gestorUsuarios.guardarUsuario(administrativo)) System.out.println("3 Registrado correctamente");
     }
 }

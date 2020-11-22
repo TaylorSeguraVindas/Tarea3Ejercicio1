@@ -1,6 +1,5 @@
 package segura.taylor.bl.persistencia;
 
-import segura.taylor.bl.entidades.Material;
 import segura.taylor.bl.entidades.Prestamo;
 
 import java.io.*;
@@ -12,12 +11,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * La clase FAO se encarga de toda la lógica de acceso a los archivos ya sea para lectura o escritura
+ *
+ * @author Taylor Segura Vindas
+ * @version 1.0
+ * @since 2020-11-22
+ */
 public class PrestamoFAO {
     private final String directorioPrestamos = "c:\\dev\\Prestamos.csv";
 
     private UsuarioFAO usuarioFAO = new UsuarioFAO();
     private MaterialFAO materialFAO = new MaterialFAO();
 
+    /**
+     * Metodo para guardar un nuevo prestamo en el archivo
+     * @param nuevoPrestamo instancia de la clase Material que será almacenado
+     * @return true si se realiza correctamente, false si ocurre un error
+     * @see Prestamo
+     */
     public boolean guardarNuevoPrestamo(Prestamo nuevoPrestamo) {
         boolean idRepetido = buscarPorId(nuevoPrestamo.getId()).isPresent();
 
@@ -35,6 +47,13 @@ public class PrestamoFAO {
         }
         return false;
     }
+
+    /**
+     * Metodo usado para sobreescribir un prestamo en el archivo
+     * @param prestamo instancia de la clase prestamo con los valores actualizados
+     * @return true si se realiza correctamente, false si ocurre un error
+     * @see Prestamo
+     */
     public boolean modificarPrestamo(Prestamo prestamo) {
         ArrayList<String> result = new ArrayList<>();
         BufferedReader reader;
@@ -84,6 +103,11 @@ public class PrestamoFAO {
         return false;
     }
 
+    /**
+     * Metodo usado para leer todos los prestamos almacenados
+     * @return lista con instancias de la clase Prestamo
+     * @see Prestamo
+     */
     public List<Prestamo> listarTodos() {
         ArrayList<Prestamo> result = new ArrayList<>();
         BufferedReader reader;
@@ -115,6 +139,12 @@ public class PrestamoFAO {
         return result;
     }
 
+    /**
+     * Metodo usado para buscar un prestamo usando como filtro el id especificado
+     * @param id identificador del prestamo que se busca
+     * @return instancia de la clase prestamo que coincide con el identificador enviado
+     * @see Prestamo
+     */
     public Optional<Prestamo> buscarPorId(String id) {
         BufferedReader reader;
 
@@ -140,6 +170,12 @@ public class PrestamoFAO {
         }
         return Optional.empty();
     }
+    /**
+     * Metodo usado para buscar un prestamo usando como filtro el id del usuario especificado y que no esté completado
+     * @param idUsuario identificador del prestamo que se busca
+     * @return instancia de la clase prestamo que coincide con el identificador enviado y además no está completado
+     * @see Prestamo
+     */
     public Optional<Prestamo> buscarPendiente(String idUsuario) {
         BufferedReader reader;
 
@@ -170,6 +206,12 @@ public class PrestamoFAO {
         return Optional.empty();
     }
 
+    /**
+     * Metodo para crear instancias de la clase Prestamo usando datos leidos de un archivo
+     * @param datosLinea arreglo de String con los datos necesarios para inicializar la clase
+     * @return una instancia de la clase Prestamo
+     * @see Prestamo
+     */
     private Prestamo leerPrestamoCSV(String[] datosLinea) {
         Prestamo prestamo = new Prestamo(datosLinea);
 

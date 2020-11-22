@@ -30,6 +30,10 @@ public class Estudiante extends Usuario {
     public Estudiante(){
         this.tipoUsuario = EnumTipoUsuario.ESTUDIANTE;
     }
+    /**
+     * Metodo constructor usado para crear una instancia basada en texto
+     * @param datos array de String con los datos necesarios para crear la instancia
+     */
     public Estudiante(String[] datos) {
         this.tipoUsuario = EnumTipoUsuario.ESTUDIANTE;
         this.id = datos[1];
@@ -38,6 +42,15 @@ public class Estudiante extends Usuario {
         this.carrera = EnumCarrera.valueOf(datos[4]);
         this.creditos = Integer.parseInt(datos[5]);
     }
+
+    /**
+     * Metodo constructor
+     * @param id String que define el id
+     * @param nombre String que define el nombre
+     * @param apellido String que define el apellido
+     * @param carrera valor de EnumCarrera quq define la carrera
+     * @param creditos int que define los creditos
+     */
     public Estudiante(String id, String nombre, String apellido, EnumCarrera carrera, int creditos) {
         super(id, nombre, apellido);
         this.tipoUsuario = EnumTipoUsuario.ESTUDIANTE;
