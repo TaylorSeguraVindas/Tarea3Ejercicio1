@@ -46,7 +46,7 @@ public abstract class Multimedia extends Material{
     @Override
     public String toString() {
         return super.toString() +
-                "formato=" + formato +
+                ", formato=" + formato +
                 ", duracion=" + duracion +
                 ", idioma='" + idioma + '\'' +
                 '}';

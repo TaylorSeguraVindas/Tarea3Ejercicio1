@@ -49,7 +49,7 @@ public class Profesor extends Usuario{
     public String toString() {
         return "Profesor{" +
                 super.toString() +
-                "contrato=" + contrato +
+                ", contrato=" + contrato +
                 ", fechaContratacion=" + fechaContratacion +
                 '}';
     }

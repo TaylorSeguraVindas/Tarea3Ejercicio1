@@ -32,9 +32,17 @@ public class Audio extends Multimedia{
     //Metodos
     @Override
     public String toString() {
-        return "Audio{" + super.toString();
+        return "Audio{" +
+                "signatura='" + signatura + '\'' +
+                ", tipoMaterial=" + tipoMaterial +
+                ", formato=" + formato +
+                ", duracion=" + duracion +
+                ", idioma='" + idioma + '\'' +
+                ", fechaCompra=" + fechaCompra +
+                ", restringido=" + restringido +
+                ", tema=" + tema +
+                '}';
     }
-
 
     @Override
     public String toCSV() {

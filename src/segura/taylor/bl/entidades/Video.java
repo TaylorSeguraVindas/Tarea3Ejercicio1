@@ -44,8 +44,15 @@ public class Video extends Multimedia{
     @Override
     public String toString() {
         return "Video{" +
-                super.toString() +
-                "director='" + director + '\'' +
+                "signatura='" + signatura + '\'' +
+                ", tipoMaterial=" + tipoMaterial +
+                ", director='" + director + '\'' +
+                ", formato=" + formato +
+                ", duracion=" + duracion +
+                ", idioma='" + idioma + '\'' +
+                ", fechaCompra=" + fechaCompra +
+                ", restringido=" + restringido +
+                ", tema=" + tema +
                 '}';
     }
 

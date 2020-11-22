@@ -38,12 +38,15 @@ public class Otro extends Material{
     }
 
     //Metodos
-
     @Override
     public String toString() {
         return "Otro{" +
-                super.toString() +
-                "descripcion='" + descripcion + '\'' +
+                "signatura='" + signatura + '\'' +
+                ", tipoMaterial=" + tipoMaterial +
+                ", descripcion='" + descripcion + '\'' +
+                ", fechaCompra=" + fechaCompra +
+                ", restringido=" + restringido +
+                ", tema=" + tema +
                 '}';
     }
 

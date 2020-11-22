@@ -50,7 +50,7 @@ public class Estudiante extends Usuario {
     public String toString() {
         return "Estudiante{" +
                 super.toString() +
-                "carrera=" + carrera +
+                ", carrera=" + carrera +
                 ", creditos=" + creditos +
                 '}';
     }

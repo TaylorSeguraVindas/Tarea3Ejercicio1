@@ -50,7 +50,7 @@ public class Administrativo extends Usuario{
     public String toString() {
         return "Administrativo{" +
                 super.toString() +
-                "tipoNombramiento=" + tipoNombramiento +
+                ", tipoNombramiento=" + tipoNombramiento +
                 ", horasAsignadas=" + horasAsignadas +
                 '}';
     }

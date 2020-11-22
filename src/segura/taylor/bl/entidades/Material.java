@@ -58,7 +58,7 @@ public abstract class Material implements SerializableCSV {
     @Override
     public String toString() {
         return "tipo= '" + tipoMaterial + "\'" +
-                "signatura='" + signatura + '\'' +
+                ", signatura='" + signatura + '\'' +
                 ", fechaCompra=" + fechaCompra +
                 ", restringido=" + restringido +
                 ", tema=" + tema +

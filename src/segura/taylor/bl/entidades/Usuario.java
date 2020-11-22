@@ -46,8 +46,8 @@ public abstract class Usuario implements SerializableCSV {
     @Override
     public String toString() {
         return "Usuario{" +
-                "tipo= '" + tipoUsuario + "\'" +
                 "id='" + id + '\'' +
+                ", tipo= '" + tipoUsuario + "\'" +
                 ", nombre='" + nombre + '\'' +
                 ", apellido='" + apellido + '\'' +
                 '}';

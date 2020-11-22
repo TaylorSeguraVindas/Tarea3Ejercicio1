@@ -80,11 +80,16 @@ public class Texto extends Material{
     @Override
     public String toString() {
         return "Texto{" +
-                "titulo='" + titulo + '\'' +
+                "signatura='" + signatura + '\'' +
+                ", tipoMaterial=" + tipoMaterial +
+                ", titulo='" + titulo + '\'' +
                 ", nombreAutor='" + nombreAutor + '\'' +
                 ", fechaPublicacion=" + fechaPublicacion +
                 ", cantPaginas=" + cantPaginas +
                 ", idioma='" + idioma + '\'' +
+                ", fechaCompra=" + fechaCompra +
+                ", restringido=" + restringido +
+                ", tema=" + tema +
                 '}';
     }
 
