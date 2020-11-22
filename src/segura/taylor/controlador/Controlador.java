@@ -484,7 +484,7 @@ public class Controlador {
         }
     }
     private void realizarDevolucion() {
-        ui.imprimir("Ingrese el id del usuario que realiza el la devolucion: ");
+        ui.imprimir("Ingrese el id del usuario que realiza la devolucion: ");
         String idUsuario = ui.leerLinea();
 
         Optional<Usuario> usuario = gestorUsuarios.buscarPorId(idUsuario);
